@@ -25,7 +25,7 @@ public:
 	Matrix();
 	Matrix(int r, int c);
 	Matrix(const Matrix<T>& M);
-    ~Matrix();
+    	~Matrix();
 	void Set_row(int r) {this->row = r; };
 	void Set_column(int c){ this->column = c; };
 	void Set_Matrix(int r, int c);
@@ -40,8 +40,8 @@ public:
 
 	T* operator[](int index) const;
 	Matrix<T>& operator=(const Matrix<T>& M);
-    Matrix<T> operator+ (const Matrix<T>& M);
-    Matrix<T> operator-(const Matrix<T>& M);
+    	Matrix<T> operator+ (const Matrix<T>& M);
+    	Matrix<T> operator-(const Matrix<T>& M);
 	Matrix<T> operator*(T s);
 	Matrix<T> operator* (const Matrix<T>& M);
 	Vector<T> operator* (Vector<T>& V);
