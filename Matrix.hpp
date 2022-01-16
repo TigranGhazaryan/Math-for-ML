@@ -74,123 +74,119 @@ public:
 	class Iterator
 	{
 	public:
-			typedef std::forward_iterator_tag iterator_category;
-			typedef std::ptrdiff_t difference_type;
-			typedef T value_type;
-			typedef value_type* pointer;
-			typedef value_type& reference;
+		typedef std::forward_iterator_tag iterator_category;
+		typedef std::ptrdiff_t difference_type;
+		typedef T value_type;
+		typedef value_type* pointer;
+		typedef value_type& reference;
 
 	public:
-			Iterator(pointer ptr, const Matrix<value_type>& Mat): m_ptr(ptr),  m_ptr2(ptr)
-			{
-				this->M = Mat;
-
-				this->row = Mat.Get_row();
-				this->column = Mat.Get_column();
-				this->Pointer_Array = new pointer*[this->row];
-				for(int i = 0; i < this->row; ++i)
-					this->Pointer_Array[i] = new pointer[this->column];
-				for(int i = 0; i < this->row; ++i)
-					for(int j = 0; j < this->column; ++j)
-						this->Pointer_Array[i][j] = &Mat[i][j];	
+		Iterator(pointer ptr, const Matrix<value_type>& Mat): m_ptr(ptr),  m_ptr2(ptr)
+		{
+			this->M = Mat;
+			this->row = Mat.Get_row();
+			this->column = Mat.Get_column();
+			this->Pointer_Array = new pointer*[this->row];
+			for(int i = 0; i < this->row; ++i)
+				this->Pointer_Array[i] = new pointer[this->column];
+			for(int i = 0; i < this->row; ++i)
+				for(int j = 0; j < this->column; ++j)
+					this->Pointer_Array[i][j] = &Mat[i][j];	
 
 			//	M.Print();
-			}; 
-			Iterator (const Iterator& a) 
-			{ 
-				this->m_ptr = a.Get_m_ptr(); 
-				this->m_ptr2 = a.Get_m_ptr2();
-				this->row = a.Get_M().Get_row();
-				this->column = a.Get_M().Get_column();
-				this->Pointer_Array = new pointer*[this->row];
-				for(int i = 0; i < this->row; ++i)
-					this->Pointer_Array[i] = new pointer[this->column];
-				for(int i = 0; i < this->row; ++i)
-					for(int j = 0; j < this->column; ++j)
-						this->Pointer_Array[i][j] = &a.Get_M()[i][j];
-			};
-			pointer Get_m_ptr() const 
-			{ 
-				return this->m_ptr; 
-			}
-			pointer Get_m_ptr2() const
+		}; 
+		Iterator (const Iterator& a) 
+		{ 
+			this->m_ptr = a.Get_m_ptr(); 
+			this->m_ptr2 = a.Get_m_ptr2();
+			this->row = a.Get_M().Get_row();
+			this->column = a.Get_M().Get_column();
+			this->Pointer_Array = new pointer*[this->row];
+			for(int i = 0; i < this->row; ++i)
+				this->Pointer_Array[i] = new pointer[this->column];
+			for(int i = 0; i < this->row; ++i)
+				for(int j = 0; j < this->column; ++j)
+					this->Pointer_Array[i][j] = &a.Get_M()[i][j];
+		};
+		pointer Get_m_ptr() const 
+		{ 
+			return this->m_ptr; 
+		}
+		pointer Get_m_ptr2() const
+		{
+			return this->m_ptr2;
+		}
+		Matrix<value_type> Get_M() const
+		{
+			return this->M;
+		}
+		Iterator operator++() 
+		{ 
+			if(index == (this->row - 1))
 			{
-				return this->m_ptr2;
-			}
-			Matrix<value_type> Get_M() const
-			{
-				return this->M;
-			}
-			Iterator operator++() 
-			{ 
-				if(index == (this->row - 1))
-				{
-					m_ptr++;
-					return *this;
-				}
-				if(index != (this->row - 1) && m_ptr - m_ptr2 == 
-				this->Pointer_Array[this->index][this->column - 1] - 
-				this->Pointer_Array[this->index][0])
-				{
-					this->index++;
-					m_ptr = this->Pointer_Array[this->index][0];
-					m_ptr2 = this->Pointer_Array[this->index][0];
-
-					//std::cout << m_ptr << " =? " << m_ptr2 << '\n';
-					//exit(0);
-					return *this;
-				} 
-				
 				m_ptr++;
-				return *this; 
-			};
-			Iterator operator++(int) 
-			{ 
-				Iterator tmp = *this; 
-				++(*this); 
-				return tmp; 
-			};
-			Iterator operator--() 
-			{ 
-				m_ptr--;
-				return *this; 
-			};
-			Iterator operator--(int) 
-			{ 
-				Iterator tmp = *this; 
-				--(*this); 
-				return tmp; 
-			};
-			reference operator[](int index) 
-			{ 
-				return *(m_ptr + index);
+				return *this;
 			}
-			pointer operator->() 
-			{ 
-				return m_ptr; 
-			};
-			reference operator*() 
-			{ 
-				return *m_ptr; 
-			};
-
-			friend bool operator==(const Iterator& a, const Iterator& b)
-			{ 
-				return a.Get_m_ptr() == b.Get_m_ptr(); 
-			}
-			friend bool operator!=(const Iterator& a, const Iterator& b)
-			{ 
-				return a.Get_m_ptr() != b.Get_m_ptr();
-			}
-		private:
-			pointer m_ptr;
-			pointer m_ptr2;
-			int index = 0;
-			Matrix<value_type> M;
-			int row;
-			int column;
-			pointer** Pointer_Array;
-
+			if(index != (this->row - 1) && m_ptr - m_ptr2 == 
+			this->Pointer_Array[this->index][this->column - 1] - 
+			this->Pointer_Array[this->index][0])
+			{
+				this->index++;
+				m_ptr = this->Pointer_Array[this->index][0];
+				m_ptr2 = this->Pointer_Array[this->index][0];
+				//std::cout << m_ptr << " =? " << m_ptr2 << '\n';
+				//exit(0);
+				return *this;
+			} 
+			
+			m_ptr++;
+			return *this; 
+		};
+		Iterator operator++(int) 
+		{ 
+			Iterator tmp = *this; 
+			++(*this); 
+			return tmp; 
+		};
+		Iterator operator--() 
+		{ 
+			m_ptr--;
+			return *this; 
+		};
+		Iterator operator--(int) 
+		{ 
+			Iterator tmp = *this; 
+			--(*this); 
+			return tmp; 
+		};
+		reference operator[](int index) 
+		{ 
+			return *(m_ptr + index);
+		}
+		pointer operator->() 
+		{ 
+			return m_ptr; 
+		};
+		reference operator*() 
+		{ 
+			return *m_ptr; 
+		};
+		friend bool operator==(const Iterator& a, const Iterator& b)
+		{ 
+			return a.Get_m_ptr() == b.Get_m_ptr(); 
+		}
+		friend bool operator!=(const Iterator& a, const Iterator& b)
+		{ 
+			return a.Get_m_ptr() != b.Get_m_ptr();
+		}
+	private:
+		pointer m_ptr;
+		pointer m_ptr2;
+		int index = 0;
+		Matrix<value_type> M;
+		int row;
+		int column;
+		pointer** Pointer_Array;
 	};
 
 	Iterator begin() 
@@ -547,7 +543,7 @@ Matrix<T> Matrix<T>::Gauss_Jordan_Augmented_Elemination(Matrix<T> & M)
 				}
 
 				// Gauss-Jordan method
-				//Step 1. Make the Pivot = 1
+				// Step 1. Make the Pivot = 1
 				for(int n = 0; n < Gauss_Jordan_Aug_Elem.Get_column(); ++n)
 				{
 					if(Pivot != 0)
