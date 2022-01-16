@@ -7,9 +7,10 @@
 int main()
 {
 
+  //NOTE: EACH SECTION HAS A "START" AND "END" COMMENTED OUT PARTS, THAT YOU CAN TRY
 
   //////////////////////////////// INVERSE MATRIX, MATRIX ITERATOR ////////////////////////
-  /*
+  /* 
   As an Example Matrix for inverse 
   1 2 3        -24  18  5
   0 1 4         20 -15 -4
@@ -17,6 +18,9 @@ int main()
   */
 
  
+
+ //Examples 
+ /* START
   Matrix<double> Matrix1(2,2);
   Matrix1.Print();
   for(auto& i : Matrix1)
@@ -33,6 +37,8 @@ int main()
 */
 
 
+
+/*
   std::cout << "Range-based for loop:\n";
   for(auto& i : Matrix1)
     std::cout << i << " ";
@@ -60,13 +66,16 @@ int main()
     std::cout << i.first << " " << i.second << " ";
   std::cout << "\n";
 
-  
+
+
+  END */
 
   
 
 //////////////////////// LINEAR INDEPENDENCE ///////////////////////  
 
-  
+
+ /*START 
   
   Matrix<double> Matrix4;
   int size = 2;
@@ -121,12 +130,13 @@ int main()
   Fin_Solution.Print(); 
   
   
-  
+  END*/
   
 /////////////////// BASES AND TRANSFORMATIONS //////////////
 
 int size = 2;
 Vector<double> v(size);
+std::cout << "Input Vector\n";
 for(int i = 0; i < v.Get_size(); ++i)
   std::cin >> v[i];
 
