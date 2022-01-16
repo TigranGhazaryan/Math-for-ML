@@ -2,6 +2,7 @@
 #define _VECTOR
 
 #include <iostream>
+#include <iterator>
 #include "Matrix.hpp"
 
 template<typename T>
@@ -34,6 +35,30 @@ public:
     Vector<T> operator+(const Vector<T>& v);
     Vector<T> operator-(const Vector<T>& v);
     Vector<T>& operator*(const T& s); 
+
+    class Iterator
+    {
+    public:
+		typedef std::forward_iterator_tag iterator_category;
+		typedef std::ptrdiff_t difference_type;
+		typedef T value_type;
+		typedef value_type* pointer;
+		typedef value_type& reference;
+    public:
+        Iterator (pointer ptr) { this->m_ptr = ptr;}
+        reference operator*()const { return *this->m_ptr; }
+        pointer operator->() { return this->m_ptr; }
+        Iterator& operator++(){ this->m_ptr++; return *this;}
+        Iterator operator++(int) { Iterator temp = *this; ++(*this); return temp;}
+        friend bool operator==(const Iterator& a, const Iterator& b) { return a.m_ptr == b.m_ptr; }
+        friend bool operator!=(const Iterator& a, const Iterator& b) { return a.m_ptr != b.m_ptr; }
+    private:
+        pointer m_ptr;
+
+    };
+
+    Iterator begin() { return Iterator(&(this->vector[0])); }
+    Iterator end()   { return Iterator(&(this->vector[size])); }
 
 };
 
