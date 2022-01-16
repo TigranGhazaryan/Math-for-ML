@@ -5,10 +5,8 @@
 #include <cmath>   // For Matrix Transformation (Rotation, etc.)
 
 int main()
-{
-
-  //NOTE: EACH SECTION HAS A "START" AND "END" COMMENTED OUT PARTS, THAT YOU CAN TRY
-
+{  
+  
   //////////////////////////////// INVERSE MATRIX, MATRIX ITERATOR ////////////////////////
   
   /* 
@@ -22,11 +20,14 @@ int main()
 
  //Examples 
 
- /* START
+
+
+
   Matrix<double> Matrix1(2,2);
   Matrix1.Print();
   for(auto& i : Matrix1)
     std::cin >> i;
+ 
  
  /* for(Matrix<int>::Iterator it = Matrix1.begin(); it != Matrix1.end(); ++it)
   {
@@ -40,7 +41,7 @@ int main()
 
 
 
-/*
+
   std::cout << "Range-based for loop:\n";
   for(auto& i : Matrix1)
     std::cout << i << " ";
@@ -70,14 +71,11 @@ int main()
 
 
 
-  END */
-
   
 
 //////////////////////// LINEAR INDEPENDENCE ///////////////////////  
 
 
- /*START 
   
   Matrix<double> Matrix4;
   int size = 2;
@@ -130,10 +128,9 @@ int main()
 
   std::cout << "Solution: \n";
   Fin_Solution.Print(); 
-  
-  
-  END*/
-  
+    
+
+
 /////////////////// BASES AND TRANSFORMATIONS //////////////
 
 int size = 2;
@@ -157,6 +154,7 @@ Transformation[1][1] = cos(radian);
 v.Set_Bases(Transformation);
 v.Print_Bases();
 v.Print();
+
 
 
 
