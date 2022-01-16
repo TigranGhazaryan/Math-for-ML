@@ -118,6 +118,32 @@ int main()
 
   std::cout << "Solution: \n";
   Fin_Solution.Print(); 
+  
+  
+  
+  
+/////////////////// BASES AND TRANSFORMATIONS //////////////
+
+int size = 2;
+Vector<double> v(size);
+for(int i = 0; i < v.Get_size(); ++i)
+  std::cin >> v[i];
+
+v.Print();
+
+Matrix<double> Transformation(size, size);
+//Rotation Matrix for 2*2
+double degree = 90.0;
+const double pi = 3.14159;
+double radian = (degree * pi) / 180;
+Transformation[0][0] = cos(radian);
+Transformation[0][1] = -sin(radian);
+Transformation[1][0] = sin(radian);
+Transformation[1][1] = cos(radian);
+
+v.Set_Bases(Transformation);
+v.Print_Bases();
+v.Print();
 
 }
 
