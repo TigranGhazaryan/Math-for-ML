@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MATRIX
+#define _MATRIX
+
 #include <iostream>
 #include "Vector.hpp"
 #include <iterator> 	// For std::forward_iterator_tag
@@ -693,3 +695,6 @@ Matrix<T> Matrix<T>::Basis()
 
 	return Basis_Vectors;
 }
+
+
+#endif
