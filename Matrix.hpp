@@ -365,23 +365,20 @@ template<typename T>
 Vector<T> Matrix<T>::operator* (Vector<T>& V)
 {
 	Matrix<T> temp (V.Get_size(), 1);
-	if(V.Get_size() != this->row)
+	if(V.Get_size() != this->column)
 	{
-		std::cout << "Rows must be equal\n";
+		std::cout << "Matrix Column must be equal to the Rows of the Vector\n";
 		exit(0);
 	}
 	for(int i = 0; i < V.Get_size(); ++i)
 		temp[i][0] = V[i];
 
-	Matrix<T> temp2(this->row, this->column);
-	for(int i = 0; i < this->row; ++i)
-		for(int j = 0; j < this->column; ++j)
-			temp2[i][j] = this->matrix[i][j];
-
-	Matrix<T> temp3(this->row, this->column);
-	temp3 = temp2 * temp;
+	Matrix<T> temp2 = *this;
+	Matrix<T> temp3 = temp2 * temp;
+	V.Set_Vec(temp3.Get_row());
 	for(int i = 0; i < V.Get_size(); ++i)
 		V[i] = temp3[i][0];
+
 	return V;
 }
 
