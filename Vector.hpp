@@ -1,5 +1,11 @@
-#pragma once
+#ifndef _VECTOR
+#define _VECTOR
+
+#include <iostream>
 #include "Matrix.hpp"
+
+template<typename T>
+class Matrix;
 
 template<typename T>
 class Vector
@@ -7,7 +13,8 @@ class Vector
 private:
     T* vector;
     int size = 0;
-    
+    Matrix<T>* Bases;
+
 public:
     Vector();
     Vector(int s);
@@ -17,12 +24,17 @@ public:
     void Set_Vec(int size);
     int Get_size() const { return this->size; }
     T* Get_Vec() const { return this->vector; }
+    void Set_Default_Bases();
+    void Set_Bases(const Matrix<T>& M);
+    Matrix<T> Get_Bases() const { return *this->Bases; }
+    void Print_Bases() const;
     void Print () const;
     T& operator[](int index) const;
     Vector<T>& operator=(const Vector<T>& v);
     Vector<T> operator+(const Vector<T>& v);
     Vector<T> operator-(const Vector<T>& v);
-    Vector<T>& operator*(const T& s);
+    Vector<T>& operator*(const T& s); 
+
 };
 
 //Default Constructor
@@ -30,12 +42,14 @@ template<typename T>
 Vector<T>::Vector()
 {
     Set_Vec(1);
+    Set_Default_Bases();
 }
 //Constructor
 template<typename T>
 Vector<T>::Vector(int s)
 {
     Set_Vec(s);
+    Set_Default_Bases();
 }
 
 //Copy Constructor
@@ -71,6 +85,40 @@ void Vector<T>::Set_Vec(int size)
     this->vector = new T[this->size];
     for(int i = 0; i < this->size; ++i)
         this->vector[i] = 0;
+}
+
+// Set Bases
+template<typename T>
+void Vector<T>::Set_Bases(const Matrix<T>& M)
+{
+    if(M.Get_column() != this->size || M.Get_row() != this->size)
+    {
+        std::cout << "Row and Column of the Base Matrix should match the Vector size\n";
+        exit(0);
+    }
+    this->Bases = new Matrix<T>(this->size, this->size);
+    *this->Bases = M;
+    
+    // this->Bases->Print();
+    *this = Get_Bases() * (*this);
+}
+
+template<typename T>
+void Vector<T>::Set_Default_Bases()
+{
+    Matrix<T> temp(this->size, this->size);
+    temp = temp.Identity_Matrix();
+    Set_Bases(temp);
+
+    *this = Get_Bases() * (*this);
+}
+
+//Print Bases
+template<typename T>
+void Vector<T>::Print_Bases() const
+{
+    std::cout << "Vector Bases are:\n";
+    this->Bases->Print();
 }
 
 //Print
@@ -123,3 +171,6 @@ Vector<T>& Vector<T>::operator*(const T& s)
     return *this;
 }
 
+
+
+#endif
