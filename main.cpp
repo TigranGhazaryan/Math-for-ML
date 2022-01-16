@@ -125,14 +125,21 @@ int main()
 
 /////////////////// BASES AND TRANSFORMATIONS //////////////
 
-int size = 2;
+int size = 3;
 Vector<double> v(size);
-std::cout << "Input Vector\n";
+std::cout << "Input Vector with size " << size << '\n';
 for(auto& i : v)
   std::cin >> i;
 
 v.Print();
 
+Matrix<double> Transformation(size - 1, size);
+std::cout << "Input Transformation matrix with row = " << Transformation.Get_row() 
+                                   << " and column = " << Transformation.Get_column() << '\n';
+for(auto& i : Transformation)
+  std::cin >> i;
+
+/*
 Matrix<double> Transformation(size, size);
 //Rotation Matrix for 2*2
 double degree = 90.0;
@@ -142,10 +149,31 @@ Transformation[0][0] = cos(radian);
 Transformation[0][1] = -sin(radian);
 Transformation[1][0] = sin(radian);
 Transformation[1][1] = cos(radian);
+*/
+
 
 v.Set_Bases(Transformation);
 v.Print_Bases();
 v.Print();
+
+
+size = 2;
+Vector<double> v2(size);
+std::cout << "Input Vector2 with size " << size << '\n';
+for(auto& i : v2)
+  std::cin >> i;
+
+v2.Print();
+
+Matrix<double> Transformation2(size + 1, size);
+std::cout << "Input Transformation2 matrix with row = " << Transformation2.Get_row() 
+                                    << " and column = " << Transformation2.Get_column() << '\n';
+for(auto& i : Transformation2)
+  std::cin >> i;
+
+v2.Set_Bases(Transformation2);
+v2.Print_Bases();
+v2.Print();
 
 
 
