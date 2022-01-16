@@ -16,12 +16,6 @@ int main()
   5 6 0         -5  4  1
   */
 
- 
-
- //Examples 
-
-
-
 
   Matrix<double> Matrix1(2,2);
   Matrix1.Print();
@@ -38,8 +32,6 @@ int main()
     std::cin >> *it;
   }
 */
-
-
 
 
   std::cout << "Range-based for loop:\n";
@@ -71,12 +63,10 @@ int main()
 
 
 
-  
 
 //////////////////////// LINEAR INDEPENDENCE ///////////////////////  
 
 
-  
   Matrix<double> Matrix4;
   int size = 2;
   Vector<double> V1(size);
