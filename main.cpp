@@ -2,6 +2,7 @@
 #include "Matrix.hpp"
 #include "Vector.hpp"
 #include <vector>
+#include <cmath>   // For Matrix Transformation (Rotation, etc.)
 
 int main()
 {
