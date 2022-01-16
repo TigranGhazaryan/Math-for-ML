@@ -10,6 +10,7 @@ int main()
   //NOTE: EACH SECTION HAS A "START" AND "END" COMMENTED OUT PARTS, THAT YOU CAN TRY
 
   //////////////////////////////// INVERSE MATRIX, MATRIX ITERATOR ////////////////////////
+  
   /* 
   As an Example Matrix for inverse 
   1 2 3        -24  18  5
@@ -20,6 +21,7 @@ int main()
  
 
  //Examples 
+
  /* START
   Matrix<double> Matrix1(2,2);
   Matrix1.Print();
@@ -155,6 +157,8 @@ Transformation[1][1] = cos(radian);
 v.Set_Bases(Transformation);
 v.Print_Bases();
 v.Print();
+
+
 
 }
 
