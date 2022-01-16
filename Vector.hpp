@@ -142,16 +142,12 @@ void Vector<T>::Set_Vec(int size)
 template<typename T>
 void Vector<T>::Set_Bases(const Matrix<T>& M)
 {
-    if(M.Get_column() != this->size || M.Get_row() != this->size)
-    {
-        std::cout << "Row and Column of the Base Matrix should match the Vector size\n";
-        exit(0);
-    }
-    this->Bases = new Matrix<T>(this->size, this->size);
+    this->Bases = new Matrix<T>(M.Get_row(), M.Get_column());
     *this->Bases = M;
     
-    // this->Bases->Print();
-    *this = Get_Bases() * (*this);
+    Vector<T> temp = Get_Bases() * (*this);
+    Set_Vec(temp.Get_size());
+    *this = temp;
 }
 
 template<typename T>
