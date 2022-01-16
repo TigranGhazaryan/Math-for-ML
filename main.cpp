@@ -17,6 +17,7 @@ int main()
   */
 
 
+/*
   Matrix<double> Matrix1(2,2);
   Matrix1.Print();
   for(auto& i : Matrix1)
@@ -34,6 +35,7 @@ int main()
 */
 
 
+/*
   std::cout << "Range-based for loop:\n";
   for(auto& i : Matrix1)
     std::cout << i << " ";
@@ -119,15 +121,15 @@ int main()
   std::cout << "Solution: \n";
   Fin_Solution.Print(); 
     
-
+*/
 
 /////////////////// BASES AND TRANSFORMATIONS //////////////
 
 int size = 2;
 Vector<double> v(size);
 std::cout << "Input Vector\n";
-for(int i = 0; i < v.Get_size(); ++i)
-  std::cin >> v[i];
+for(auto& i : v)
+  std::cin >> i;
 
 v.Print();
 
@@ -147,6 +149,4 @@ v.Print();
 
 
 
-
 }
-
