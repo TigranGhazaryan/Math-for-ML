@@ -36,6 +36,8 @@ public:
     Vector<T> operator-(const Vector<T>& v);
     Vector<T>& operator*(const T& s); 
 
+    // Inspiration / Sources for the Iterator: https://internalpointers.com/post/writing-custom-iterators-modern-cpp
+	//					                       https://www.youtube.com/watch?v=F9eDv-YIOQ0 by The Cherno
     class Iterator
     {
     public:
