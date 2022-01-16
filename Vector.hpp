@@ -37,15 +37,15 @@ public:
     Vector<T>& operator*(const T& s); 
 
     // Inspiration / Sources for the Iterator: https://internalpointers.com/post/writing-custom-iterators-modern-cpp
-	//					                       https://www.youtube.com/watch?v=F9eDv-YIOQ0 by The Cherno
+    //					       https://www.youtube.com/watch?v=F9eDv-YIOQ0 by The Cherno
     class Iterator
     {
     public:
-		typedef std::forward_iterator_tag iterator_category;
-		typedef std::ptrdiff_t difference_type;
-		typedef T value_type;
-		typedef value_type* pointer;
-		typedef value_type& reference;
+	typedef std::forward_iterator_tag iterator_category;
+	typedef std::ptrdiff_t difference_type;
+	typedef T value_type;
+	typedef value_type* pointer;
+	typedef value_type& reference;
     public:
         Iterator (pointer ptr) { this->m_ptr = ptr;}
         reference operator*()const { return *this->m_ptr; }
