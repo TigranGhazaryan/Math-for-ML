@@ -123,7 +123,7 @@ int main()
     
 */
 
-/////////////////// BASES AND TRANSFORMATIONS //////////////
+/////////////////// BASIS, TRANSFORMATIONS and KERNEL //////////////
 
 int size = 3;
 Vector<double> v(size);
@@ -154,27 +154,12 @@ Transformation[1][1] = cos(radian);
 
 v.Set_Bases(Transformation);
 v.Print_Bases();
+
+std::cout << "Vector with new bases\n";
 v.Print();
 
-
-size = 2;
-Vector<double> v2(size);
-std::cout << "Input Vector2 with size " << size << '\n';
-for(auto& i : v2)
-  std::cin >> i;
-
-v2.Print();
-
-Matrix<double> Transformation2(size + 1, size);
-std::cout << "Input Transformation2 matrix with row = " << Transformation2.Get_row() 
-                                    << " and column = " << Transformation2.Get_column() << '\n';
-for(auto& i : Transformation2)
-  std::cin >> i;
-
-v2.Set_Bases(Transformation2);
-v2.Print_Bases();
-v2.Print();
-
-
-
+Transformation.Basis();
+std::cout << "Matrix Kernel:\n";
+Transformation.Kernel_Print();
+std::cout << "\nnullity = " << Transformation.Get_nullity() << '\n'; 
 }
