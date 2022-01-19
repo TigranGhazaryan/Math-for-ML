@@ -19,6 +19,8 @@ private:
 	int Dimension = 0;
 	int Rank = 0;
 	T** matrix;
+	std::vector<int> Kernel_Columns;
+	int nullity = 0;
 	std::vector<std::pair<T, int>> Matrix_Pivot_List;
 	
 public:
@@ -65,7 +67,12 @@ public:
 	void Set_Rank(int rank) { this->Rank = rank; }
 	int Get_Dimension() { return this->Dimension; }
 	int Get_Rank() { return this->Rank; }
-	
+	Matrix<T> Kernel_Basis();
+	void Kernel_Print();
+	void Set_Kernel_Columns(const std::vector<int>& K) { this->Kernel_Columns = K; }
+	std::vector<int> Get_Kernel_Columns() { return this->Kernel_Columns; }
+	void Set_nullity(int _nullity) { this->nullity = _nullity; };
+	int Get_nullity() { return this->nullity; }
 
 
 	// Inspiration / Sources for the Iterator: https://internalpointers.com/post/writing-custom-iterators-modern-cpp
@@ -565,8 +572,8 @@ Matrix<T> Matrix<T>::Gauss_Jordan_Augmented_Elemination(Matrix<T> & M)
 			}
 		}
 	}
-	std::cout << "Gauss-Jordan Augmented Elemination\n";
-	Gauss_Jordan_Aug_Elem.Print();
+//	std::cout << "Gauss-Jordan Augmented Elemination\n";
+//	Gauss_Jordan_Aug_Elem.Print();
 	return Gauss_Jordan_Aug_Elem;
 }
 
@@ -661,6 +668,8 @@ template<typename T>
 Vector<T> Matrix<T>::Matrix_to_Vector(Vector<T>& v, int col)
 {
 	Matrix<T> temp = *this;
+	if(v.Get_size() < temp.Get_row())
+		v.Set_Vec(temp.Get_row());
 	for(int i = 0; i < v.Get_size(); ++i)
 		v[i] = temp[i][col];
 
@@ -685,9 +694,115 @@ Matrix<T> Matrix<T>::Basis()
 	// Set Dimension and Rank
 	Set_Dimension(Basis_Vectors.Get_column());
 	Set_Rank(Basis_Vectors.Get_column());
-
+	Set_nullity(this->column - Get_Rank());
 	return Basis_Vectors;
 }
 
+template<typename T>
+Matrix<T> Matrix<T>::Kernel_Basis()
+{
+	Matrix<T> Bas = Basis();
+	Matrix<T> temp = Gauss_Jordan_Elemination();
+	Matrix<T> _Kernel;
+	if(Get_Rank() == this->column)
+	{
+		Vector<T> v(this->column);
+		_Kernel.Add_Vector(v);
+		return _Kernel;
+	}
+
+	// Keep the non-Independent columns
+	std::vector<int> Kernel_columns;
+	
+	for(int i = 0; i < temp.Get_column(); ++i)
+	{
+		bool Kernel_col = true;
+		for(int j = 0; j < Matrix_Pivot_List.size(); ++j)
+		{
+			if(i == this->Matrix_Pivot_List[j].second )
+			{
+				Kernel_col = false;
+				break;
+			}
+		}
+		if(Kernel_col == true)
+		{	
+			Kernel_columns.push_back(i);	
+		}
+	}
+	
+	Set_Kernel_Columns(Kernel_columns);
+	for(int m = 0; m < Kernel_columns.size(); ++m)
+	{
+		
+		Vector<T> v(temp.Get_column());
+		v[Kernel_columns[m]] = 1;
+		for(int i = 0; i < temp.Get_row(); ++i)
+		{
+			for(int j = 0; j < temp.Get_column(); ++j)
+			{
+				if(temp[i][j] == 1)
+				{	
+					v[j] += temp[i][j] * (-1) * temp[i][Kernel_columns[m]];
+					break;
+				}
+			}
+		}
+		_Kernel.Add_Vector(v);
+	}
+
+
+	return _Kernel;
+}
+
+template<typename T>
+void Matrix<T>::Kernel_Print() 
+{
+	Matrix<T> Kern = Kernel_Basis();
+
+	if(Get_Rank() == this->column)
+	{
+		std::cout << "The system has a unique solution:\n";
+		Kern.Print();
+	}
+	else
+	{
+		std::cout << "Vectors {";
+		for(int i = 0; i < Kern.Get_column(); ++i)
+		{
+			int col = Get_Kernel_Columns()[i] + 1;
+			std::cout << " v(" << col <<")";
+			if(i != Kern.Get_column() - 1)
+				std::cout << " , ";
+			else
+				std::cout << " } :\n";	
+		}
+		Kern.Print();
+
+		std::cout << "The system has Infinitely many Solutions.\n";
+		std::cout << "For: \n";
+
+		for(int j = 0; j < this->column; ++j)
+		{
+			int col = j + 1;
+			if(j == this->column / 2)
+			{
+				std::cout << "c(" << col << ") = ";
+				for(int i = 0; i < Kern.Get_column(); ++i)
+				{
+					int col2 = Get_Kernel_Columns()[i] + 1;
+					std::cout << "c(" << col2 << ") * v(" << col2 <<")";
+					if(i != Kern.Get_column() - 1)
+						std::cout << " + ";
+					else
+						std::cout << '\n';		
+				}
+			}
+			else	
+				std::cout << "c(" << col << ")\n";
+		
+		}
+	}
+}
 
 #endif
