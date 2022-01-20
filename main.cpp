@@ -159,7 +159,11 @@ std::cout << "Vector with new bases\n";
 v.Print();
 
 Transformation.Basis();
-std::cout << "Matrix Kernel:\n";
+std::cout << "Matrix Kernel / Null Space:\n";
 Transformation.Kernel_Print();
 std::cout << "\nnullity = " << Transformation.Get_nullity() << '\n'; 
+
+
+// Manhathan Norm  | Euclidean Norm | Scalar Product
+std::cout << "Manhathan Norm = " << v.Manhathan_Norm() << " Euclidean Norm = " << v.Euclidean_Norm() << '\n';
 }
