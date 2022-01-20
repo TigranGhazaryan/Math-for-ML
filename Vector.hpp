@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iterator>
 #include "Matrix.hpp"
+#include <cmath> 	// For Vector Norm
 
 template<typename T>
 class Matrix;
@@ -35,6 +36,10 @@ public:
     Vector<T> operator+(const Vector<T>& v);
     Vector<T> operator-(const Vector<T>& v);
     Vector<T>& operator*(const T& s); 
+    Matrix<T> Transpose();
+    double Manhathan_Norm();
+    double Euclidean_Norm();
+    double Scalar_Product(Vector<T>& v);
 
     // Inspiration / Sources for the Iterator: https://internalpointers.com/post/writing-custom-iterators-modern-cpp
 	//					                       https://www.youtube.com/watch?v=F9eDv-YIOQ0 by The Cherno
@@ -216,6 +221,57 @@ Vector<T>& Vector<T>::operator*(const T& s)
     for(size_t i = 0; i < this->size; ++i)
         this->vector[i]*= s;
     return *this;
+}
+
+// Vector Transpose
+template<typename T>
+Matrix<T> Vector<T>::Transpose()
+{
+    Vector<T> temp = *this;
+    Matrix<T> temp2;
+    temp2.Add_Vector(temp);
+    Matrix<T> Transpose = temp2.Transpose_Matrix();
+    //Transpose.Print();
+    return Transpose;
+}
+
+// Manhathan Norm
+template<typename T>
+double Vector<T>::Manhathan_Norm()
+{
+    Vector<T> temp = *this;
+    T Norm = 0;
+    for(auto i : temp)
+        Norm += std::abs(i);
+    return Norm;
+}
+
+//Euclidean Norm
+template<typename T>
+double Vector<T>::Euclidean_Norm()
+{
+    Matrix<T> temp = Transpose();
+    Vector<T> temp2 = *this;
+    Vector<T> outcome = temp * temp2;
+    double Norm = std::sqrt(outcome[0]);
+    return Norm;
+}
+
+//Scalar Product
+template<typename T>
+double Vector<T>::Scalar_Product(Vector<T>& v)
+{
+    if(v.Get_size() != this->size)
+    {
+        std::cout << "Vector size must be equal\n";
+        exit(0);
+    }
+    Matrix<T> temp = v.Transpose();
+    Vector<T> temp2 = *this;
+
+    Vector<T> Product = temp * temp2;
+    double _Scalar = Product[0];
+    return _Scalar;
 }
 
 
