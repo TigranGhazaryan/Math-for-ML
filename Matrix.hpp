@@ -9,6 +9,7 @@
 #include <utility>  	// For std::pair
 
 
+
 template<typename T>
 class Matrix
 {
@@ -389,6 +390,8 @@ Vector<T> Matrix<T>::operator* (Vector<T>& V)
 	return V;
 }
 
+
+// Identity Matrix
 template<typename T>
 Matrix<T> Matrix<T>::Identity_Matrix()
 {
@@ -405,21 +408,21 @@ Matrix<T> Matrix<T>::Identity_Matrix()
 	}
 	return Identity;
 }
+
+// Matrix Transpose
 template<typename T>
 Matrix<T> Matrix<T>::Transpose_Matrix()
 {
-	Matrix<T> Transpose;
-	Transpose = *this;
+	Matrix<T> Transpose (this->column, this->row);
 	for(int i = 0; i < this->row; ++i)
-		for(int j = i; j < this->column; ++j)
-		{
-			T temp = Transpose[i][j];
-			Transpose[i][j] = Transpose[j][i];
-			Transpose[j][i] = temp;
-		}
+		for(int j = 0; j < this->column; ++j)
+			Transpose[j][i] = this->matrix[i][j];
+		
 	return Transpose;
 }
 
+
+//
 template <typename T>
 Matrix<T> Matrix<T>::Matrix_i_j(Matrix<T>& M, int i, int j)
 {
@@ -449,6 +452,8 @@ Matrix<T> Matrix<T>::Matrix_i_j(Matrix<T>& M, int i, int j)
 	return Matrix_i_j;
 }
 
+
+// Gauss Jordan Form
 template <typename T>
 Matrix<T> Matrix<T>::Gauss_Jordan_Form() 
 {
@@ -464,6 +469,8 @@ Matrix<T> Matrix<T>::Gauss_Jordan_Form()
 	return Gauss_Jordan_F;
 }
 
+
+// Swap Rows of a Matrix
 template<typename T>
 void Matrix<T>::Swap_Rows(Matrix<T>& M, int row1, int row2)
 {
@@ -483,6 +490,8 @@ void Matrix<T>::Swap_Rows(Matrix<T>& M, int row1, int row2)
 //	M.Print();
 }
 
+
+// Check Pivots of a Matrix
 template <typename T>
 void Matrix<T>::Check_Pivot(Matrix<T>& M, int i, int j)
 {
@@ -500,6 +509,8 @@ void Matrix<T>::Check_Pivot(Matrix<T>& M, int i, int j)
 }
 
 
+
+//Gauss Jordan Augmented Elemination 
 template <typename T>
 Matrix<T> Matrix<T>::Gauss_Jordan_Augmented_Elemination(Matrix<T> & M)
 {
@@ -577,6 +588,9 @@ Matrix<T> Matrix<T>::Gauss_Jordan_Augmented_Elemination(Matrix<T> & M)
 	return Gauss_Jordan_Aug_Elem;
 }
 
+
+
+// Matrix Determinant
 template <typename T>
 void Matrix<T>::Determinant()
 {
@@ -593,6 +607,8 @@ void Matrix<T>::Determinant()
 }
 
 
+
+// Gauss Jordan Elemination Form
 template <typename T>
 Matrix<T> Matrix<T>::Gauss_Jordan_Elemination()
 {
@@ -609,6 +625,8 @@ Matrix<T> Matrix<T>::Gauss_Jordan_Elemination()
 	return Gauss_Jordan_Elem;
 }
 
+
+// Matrix Inverse
 template <typename T>
 Matrix<T> Matrix<T>::Inverse_Matrix()
 {
@@ -639,6 +657,8 @@ Matrix<T> Matrix<T>::Inverse_Matrix()
 	return Inverse;
 }
 
+
+// Add Vector to a Matrix
 template<typename T>
 Matrix<T> Matrix<T>::Add_Vector(const Vector<T>& v)
 {
@@ -651,6 +671,8 @@ Matrix<T> Matrix<T>::Add_Vector(const Vector<T>& v)
 	return *this;
 }
 
+
+// Linear (In)Dependence Check for a Matrix
 template<typename T>
 void Matrix<T>::Linear_Dependence_Check()
 {
@@ -664,6 +686,8 @@ void Matrix<T>::Linear_Dependence_Check()
 		
 }
 
+
+// Matrix to Vector(s) from Columns
 template<typename T>
 Vector<T> Matrix<T>::Matrix_to_Vector(Vector<T>& v, int col)
 {
@@ -676,6 +700,8 @@ Vector<T> Matrix<T>::Matrix_to_Vector(Vector<T>& v, int col)
 	return v;
 }
 
+
+// Matrix Basis
 template<typename T>
 Matrix<T> Matrix<T>::Basis()
 {
@@ -698,6 +724,8 @@ Matrix<T> Matrix<T>::Basis()
 	return Basis_Vectors;
 }
 
+
+// Kernel | Null Space of a Matrix
 template<typename T>
 Matrix<T> Matrix<T>::Kernel_Basis()
 {
@@ -755,6 +783,8 @@ Matrix<T> Matrix<T>::Kernel_Basis()
 	return _Kernel;
 }
 
+
+// Print Null Space of a Matrix
 template<typename T>
 void Matrix<T>::Kernel_Print() 
 {
