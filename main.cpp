@@ -127,7 +127,7 @@ int main()
 
 int size = 3;
 Vector<double> v(size);
-std::cout << "Input Vector with size " << size << '\n';
+std::cout << "Input Vector v with size " << size << '\n';
 for(auto& i : v)
   std::cin >> i;
 
@@ -155,7 +155,7 @@ Transformation[1][1] = cos(radian);
 v.Set_Bases(Transformation);
 v.Print_Bases();
 
-std::cout << "Vector with new bases\n";
+std::cout << "Vector v with new bases\n";
 v.Print();
 
 Transformation.Basis();
@@ -166,4 +166,6 @@ std::cout << "\nnullity = " << Transformation.Get_nullity() << '\n';
 
 // Manhathan Norm  | Euclidean Norm | Scalar Product
 std::cout << "Manhathan Norm = " << v.Manhathan_Norm() << " Euclidean Norm = " << v.Euclidean_Norm() << '\n';
+
+std::cout << "Scalar product of v with itself = " << v.Scalar_Product(v) << '\n';
 }
