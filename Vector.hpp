@@ -4,7 +4,7 @@
 #include <iostream>
 #include <iterator>
 #include "Matrix.hpp"
-#include <cmath> 	// For Vector Norm
+#include <cmath> 	// For Vector Norm (std::pow, std::abs, std::sqrt)
 
 template<typename T>
 class Matrix;
@@ -39,6 +39,7 @@ public:
     Matrix<T> Transpose();
     double Manhathan_Norm();
     double Euclidean_Norm();
+    double L_p_Norm(double p);
     double Scalar_Product(Vector<T>& v);
 
     // Inspiration / Sources for the Iterator: https://internalpointers.com/post/writing-custom-iterators-modern-cpp
@@ -254,6 +255,18 @@ double Vector<T>::Euclidean_Norm()
     Vector<T> temp2 = *this;
     Vector<T> outcome = temp * temp2;
     double Norm = std::sqrt(outcome[0]);
+    return Norm;
+}
+
+template<typename T>
+double Vector<T>:: L_p_Norm(double p)
+{
+    Vector<T> temp = *this;
+    double Norm = 0;
+    for(auto i : temp)
+        Norm += std::pow(std::abs(i), p);
+   
+    Norm = std::pow(Norm, 1 / p);
     return Norm;
 }
 
