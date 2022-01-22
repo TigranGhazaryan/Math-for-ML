@@ -151,6 +151,16 @@ Transformation[1][0] = sin(radian);
 Transformation[1][1] = cos(radian);
 */
 
+// Manhathan Norm  | Euclidean Norm | Scalar Product
+std::cout << "Manhathan Norm = " << v.Manhathan_Norm() << " Euclidean Norm = " << v.Euclidean_Norm() << '\n';
+
+std::cout << "Scalar product of v with itself = " << v.Scalar_Product(v) << '\n';
+
+double p = 0;
+std::cout << "Input p\n";
+std::cin >> p;
+std::cout << "L_p_Norm for p = " << p << " is " << v.L_p_Norm(p) << '\n';
+
 
 v.Set_Bases(Transformation);
 v.Print_Bases();
@@ -164,8 +174,5 @@ Transformation.Kernel_Print();
 std::cout << "\nnullity = " << Transformation.Get_nullity() << '\n'; 
 
 
-// Manhathan Norm  | Euclidean Norm | Scalar Product
-std::cout << "Manhathan Norm = " << v.Manhathan_Norm() << " Euclidean Norm = " << v.Euclidean_Norm() << '\n';
 
-std::cout << "Scalar product of v with itself = " << v.Scalar_Product(v) << '\n';
 }
