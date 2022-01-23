@@ -275,9 +275,9 @@ void Matrix<T>::Print() const
 	{
 		for(int j = 0; j < this->column; ++j)
 			std::cout << this->matrix[i][j] << " ";
-		std::cout << std::endl;
+		std::cout << '\n';
 	}
-	std::cout << std::endl;
+	std::cout << '\n';
 }
 
 //Assignment Operator =
@@ -546,8 +546,8 @@ Matrix<T> Matrix<T>::Gauss_Jordan_Augmented_Elemination(Matrix<T>& M)
 							++j;
 							if(j == M.Get_column())
 							{
-								std::cout << "Gauss-Jordan Augmented Partial Elemination\n";
-								Gauss_Jordan_Aug_Elem.Print();
+							//	std::cout << "Gauss-Jordan Augmented Partial Elemination\n";
+							//	Gauss_Jordan_Aug_Elem.Print();
 								return Gauss_Jordan_Aug_Elem;
 							}
 						}
@@ -600,8 +600,8 @@ Matrix<T> Matrix<T>::Gauss_Jordan_Augmented_Elemination(Matrix<T>& M)
 			}
 		}
 	}
-	std::cout << "Gauss-Jordan Augmented Elemination\n";
-	Gauss_Jordan_Aug_Elem.Print();
+//	std::cout << "Gauss-Jordan Augmented Elemination\n";
+//	Gauss_Jordan_Aug_Elem.Print();
 	return Gauss_Jordan_Aug_Elem;
 }
 
@@ -807,11 +807,12 @@ template<typename T>
 void Matrix<T>::Kernel_Print() 
 {
 	Matrix<T> Kern = Kernel_Basis();
-
+	std::cout << "Matrix Kernel / Null Space\n";
 	if(Get_Rank() == this->column)
 	{
 		std::cout << "The system has a unique solution:\n";
 		Kern.Print();
+		std::cout << "\nnullity = " << Get_nullity() << '\n';
 	}
 	else
 	{
@@ -851,6 +852,7 @@ void Matrix<T>::Kernel_Print()
 		
 		}
 	}
+	std::cout << "\nnullity = " << Get_nullity() << '\n';
 }
 
 #endif
