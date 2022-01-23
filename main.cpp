@@ -18,7 +18,7 @@ int main()
 
 
 /*
-  Matrix<double> Matrix1(2,2);
+  Matrix<double> Matrix1(4,4);
   Matrix1.Print();
   for(auto& i : Matrix1)
     std::cin >> i;
@@ -63,14 +63,14 @@ int main()
     std::cout << i.first << " " << i.second << " ";
   std::cout << "\n";
 
-
+*/
 
 
 //////////////////////// LINEAR INDEPENDENCE ///////////////////////  
 
-
+/*
   Matrix<double> Matrix4;
-  int size = 2;
+  int size = 3;
   Vector<double> V1(size);
   std::cout << "Input V1\n";   // 1 1 1
   for(int i = 0; i < V1.Get_size(); ++i)
@@ -87,7 +87,7 @@ int main()
   Vector<double> V3(size);
   for(int i = 0; i < V3.Get_size(); ++i)
     std::cin >> V3[i];
-  //Matrix4.Add_Vector(V3);
+  Matrix4.Add_Vector(V3);
 
   // V1.Print();
   // V2.Print();
@@ -109,8 +109,10 @@ int main()
  
   Matrix<double> Inverse = Matrix4.Inverse_Matrix();
 
-  
+  */
+
   // Ax = b; x = A^-1 * b
+ /* 
   Vector<double> Solution(size);
   std::cout << "Input Solution vector\n";
   for (int i = 0; i < Solution.Get_size(); ++i)
@@ -119,11 +121,20 @@ int main()
   Vector<double> Fin_Solution = Inverse * Solution;
 
   std::cout << "Solution: \n";
-  Fin_Solution.Print(); 
+  Fin_Solution.Print();
+ */
     
-*/
+
 
 /////////////////// BASIS, TRANSFORMATIONS and KERNEL //////////////
+
+/* Example vector v and Transformation T
+   v =  {8, -9, 6}
+
+   T =  1 -1 3
+       -1 4 9
+        3 9 4
+*/
 
 int size = 3;
 Vector<double> v(size);
@@ -133,7 +144,7 @@ for(auto& i : v)
 
 v.Print();
 
-Matrix<double> Transformation(size - 1, size);
+Matrix<double> Transformation(size, size);
 std::cout << "Input Transformation matrix with row = " << Transformation.Get_row() 
                                    << " and column = " << Transformation.Get_column() << '\n';
 for(auto& i : Transformation)
@@ -162,16 +173,24 @@ std::cin >> p;
 std::cout << "L_p_Norm for p = " << p << " is " << v.L_p_Norm(p) << '\n';
 
 
-v.Set_Bases(Transformation);
-v.Print_Bases();
+if(v.Get_size() == Transformation.Get_column())
+{
+  v.Set_Bases(Transformation);
+  v.Print_Bases();
 
-std::cout << "Vector v with new bases\n";
-v.Print();
+  std::cout << "Vector v with new bases\n";
+  v.Print();
+}
 
-Transformation.Basis();
-std::cout << "Matrix Kernel / Null Space:\n";
-Transformation.Kernel_Print();
-std::cout << "\nnullity = " << Transformation.Get_nullity() << '\n'; 
+Matrix<double> Basis_of_Tr = Transformation.Basis();
+std::cout << "Basis of the Transformation Matrix is:\n";
+Basis_of_Tr.Print();
+
+std::cout << "Rank of Transformation Matrix is:\n" << Transformation.Get_Rank() << '\n';
+
+Transformation.Kernel_Print(); 
+Transformation.Determinant();
+std::cout << "Transformation Determinant  = " << Transformation.Get_Determinant() << '\n';
 
 
 
