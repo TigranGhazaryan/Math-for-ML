@@ -236,6 +236,8 @@ Matrix<T> Vector<T>::Transpose()
     return Transpose;
 }
 
+
+//Norms ||Vector||
 // Manhathan Norm
 template<typename T>
 double Vector<T>::Manhathan_Norm()
