@@ -612,7 +612,7 @@ template <typename T>
 void Matrix<T>::Determinant()
 {
 //	std::cout << "\n\n\n";
-	std::cout << "///////////// MATRIX DETERMINANT CALCULATION /////////\n\n";
+//	std::cout << "///////////// MATRIX DETERMINANT CALCULATION /////////\n\n";
 	Matrix<T> ThisMatrix;
 	ThisMatrix = *this;
 	Gauss_Jordan_Augmented_Elemination(ThisMatrix);	
