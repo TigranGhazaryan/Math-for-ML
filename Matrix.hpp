@@ -16,7 +16,7 @@ class Matrix
 private:
 	int row = 0;
 	int column = 0;
-	T determinant = 1;
+	double determinant = 1;
 	int Dimension = 0;
 	int Rank = 0;
 	T** matrix;
@@ -37,8 +37,8 @@ public:
 	T** Get_Matrix() const { return this->matrix; };
 	int Get_row() const { return this->row; };
 	int Get_column() const { return this->column; };
-	void Set_Determinant(T d) { this->determinant = d;}
-	T Get_Determinant() { return this->determinant; }
+	void Set_Determinant(double d) { this->determinant = d;}
+	double Get_Determinant() { return this->determinant; }
 	void Set_Matrix_Pivots(const std::vector<std::pair<T, int>>& P) { this->Matrix_Pivot_List = P; }
 	std::vector<std::pair<T, int>> Get_Matrix_Pivots() { return this-> Matrix_Pivot_List;}
 	void Print() const;
@@ -512,10 +512,11 @@ void Matrix<T>::Check_Pivot(Matrix<T>& M, int i, int j)
 
 //Gauss Jordan Augmented Elemination 
 template <typename T>
-Matrix<T> Matrix<T>::Gauss_Jordan_Augmented_Elemination(Matrix<T> & M)
+Matrix<T> Matrix<T>::Gauss_Jordan_Augmented_Elemination(Matrix<T>& M)
 {
 	Matrix<T> Gauss_Jordan_Aug_Elem;
 	Gauss_Jordan_Aug_Elem = Gauss_Jordan_Form();	
+	
 	for(int i = 0; i < Gauss_Jordan_Aug_Elem.Get_row(); ++i)
 	{
 		for(int j = 0; j < M.Get_column(); ++j)
@@ -524,6 +525,7 @@ Matrix<T> Matrix<T>::Gauss_Jordan_Augmented_Elemination(Matrix<T> & M)
 			if((j == 0 && i == 0) || i == M.Get_Matrix_Pivots().size()) 
 			{
 				// Commented pieces are for Printing the Process if Needed
+			
 				if(Gauss_Jordan_Aug_Elem[i][j] == 0)
 				{
 					while(Gauss_Jordan_Aug_Elem[i][j] == 0)
@@ -533,17 +535,32 @@ Matrix<T> Matrix<T>::Gauss_Jordan_Augmented_Elemination(Matrix<T> & M)
 						//	Set Determinant
 						if(i == j)
 						{
-							T Determ = M.Get_Determinant();
-							Determ *= -1 * Gauss_Jordan_Aug_Elem[i][j];
+							double Determ = M.Get_Determinant();
+							Determ *= -1;
+							if(Gauss_Jordan_Aug_Elem[i][j] == 0)
+								Determ *= 0;
 							M.Set_Determinant(Determ);
 						}
 						if(Gauss_Jordan_Aug_Elem[i][j] == 0)
 						{
 							++j;
 							if(j == M.Get_column())
+							{
+								std::cout << "Gauss-Jordan Augmented Partial Elemination\n";
+								Gauss_Jordan_Aug_Elem.Print();
 								return Gauss_Jordan_Aug_Elem;
+							}
 						}
 					}
+				}
+				if(Gauss_Jordan_Aug_Elem[i][j] != 0)
+				{
+					if(i == j)
+						{
+							double Determ = M.Get_Determinant();
+							Determ *= Gauss_Jordan_Aug_Elem[i][j];
+							M.Set_Determinant(Determ);
+						}
 				}
 
 				T Pivot = Gauss_Jordan_Aug_Elem[i][j];
@@ -583,8 +600,8 @@ Matrix<T> Matrix<T>::Gauss_Jordan_Augmented_Elemination(Matrix<T> & M)
 			}
 		}
 	}
-//	std::cout << "Gauss-Jordan Augmented Elemination\n";
-//	Gauss_Jordan_Aug_Elem.Print();
+	std::cout << "Gauss-Jordan Augmented Elemination\n";
+	Gauss_Jordan_Aug_Elem.Print();
 	return Gauss_Jordan_Aug_Elem;
 }
 
@@ -595,7 +612,7 @@ template <typename T>
 void Matrix<T>::Determinant()
 {
 //	std::cout << "\n\n\n";
-//	std::cout << "///////////// MATRIX DETERMINANT CALCULATION /////////\n\n";
+	std::cout << "///////////// MATRIX DETERMINANT CALCULATION /////////\n\n";
 	Matrix<T> ThisMatrix;
 	ThisMatrix = *this;
 	Gauss_Jordan_Augmented_Elemination(ThisMatrix);	
@@ -630,6 +647,7 @@ Matrix<T> Matrix<T>::Gauss_Jordan_Elemination()
 template <typename T>
 Matrix<T> Matrix<T>::Inverse_Matrix()
 {
+	Determinant();
 	if(this->row != this->column || this->determinant == 0)
 	{
 		std::cout << "This Matrix Doesnt have an Inverse\n";
