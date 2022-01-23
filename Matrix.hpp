@@ -851,8 +851,9 @@ void Matrix<T>::Kernel_Print()
 				std::cout << "c(" << col << ")\n";
 		
 		}
+		std::cout << "\nnullity = " << Get_nullity() << '\n';
 	}
-	std::cout << "\nnullity = " << Get_nullity() << '\n';
+	
 }
 
 #endif
