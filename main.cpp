@@ -144,7 +144,7 @@ for(auto& i : v)
 
 v.Print();
 
-Matrix<double> Transformation(size - 1, size);
+Matrix<double> Transformation(size - 1, size - 1);
 std::cout << "Input Transformation matrix with row = " << Transformation.Get_row() 
                                    << " and column = " << Transformation.Get_column() << '\n';
 for(auto& i : Transformation)
@@ -192,8 +192,22 @@ std::cout << "Rank of Transformation Matrix is:\n" << Transformation.Get_Rank() 
 std::cout << "Transformation Matrix Gauss Jordan Augmented ";
 (Transformation.Get_Determinant() == 0) ? std::cout << "Partial Elemination" : std::cout << "Elemination\n";
 
-Transformation.Gauss_Jordan_Augmented_Elemination(Transformation).Print();
+Matrix<double> temp = Transformation;
+Matrix<double> Gauss_Jordan = Transformation.Gauss_Jordan_Augmented_Elemination(temp);
+Gauss_Jordan.Print();
 Transformation.Kernel_Print(); 
 
+// Symmetricity
+std::cout << "Transformation Matrix is";
+Transformation.Symmetric() ? std::cout << " Symmetric\n" : std::cout << " not Symmetric\n";
+
+
+Matrix<double> Inverse = Transformation.Inverse_Matrix();
+std::cout << "Transformation Inverse is:\n";
+Inverse.Print();
+
+std::cout << "Transformation * Inverse = Identity Matrix:\n";
+Matrix<double> Identity = Transformation * Inverse;
+Identity.Print();
 
 }
