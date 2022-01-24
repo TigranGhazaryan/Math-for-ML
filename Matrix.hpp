@@ -47,11 +47,13 @@ public:
 	Matrix<T>& operator=(const Matrix<T>& M);
     Matrix<T> operator+ (const Matrix<T>& M);
     Matrix<T> operator-(const Matrix<T>& M);
+	bool operator==(const Matrix<T>& M);
 	Matrix<T> operator*(T s);
 	Matrix<T> operator* (const Matrix<T>& M);
 	Vector<T> operator* (Vector<T>& V);
 	Matrix<T> Identity_Matrix();
 	Matrix<T> Transpose_Matrix();
+	bool Symmetric();
 	Matrix<T> Matrix_i_j(Matrix<T>& M, int i, int j);
 	Matrix<T> Gauss_Jordan_Form();
 	void Determinant();
@@ -326,6 +328,32 @@ Matrix<T> Matrix<T>::operator-(const Matrix<T>& M)
 	return M2;
 }
 
+// Operator == (equality)
+template<typename T>
+bool Matrix<T>::operator==(const Matrix<T>& M)
+{
+	bool Are_Equal = true;
+	if(this->row != M.Get_row() || this->column != M.Get_column())
+	{
+		Are_Equal = false;
+		return Are_Equal;
+	}
+
+	for(int i = 0; i < this->row; ++i)
+	{
+		for(int j = 0; j < this->column; ++j)
+		{
+			if(matrix[i][j] != M[i][j])
+			{
+				Are_Equal = false;
+				return Are_Equal;
+			}
+		}
+	}
+
+	return Are_Equal;
+}
+
 //Multiplication by Scalar *
 template <typename T>
 Matrix<T> Matrix<T>::operator*(T s)
@@ -421,7 +449,15 @@ Matrix<T> Matrix<T>::Transpose_Matrix()
 	return Transpose;
 }
 
+// Symmetricity 
+template<typename T>
+bool Matrix<T>::Symmetric()
+{
+	Matrix<T> M1 = *this;
+	Matrix<T> M2 = Transpose_Matrix();
+	return M1 == M2;
 
+}
 //
 template <typename T>
 Matrix<T> Matrix<T>::Matrix_i_j(Matrix<T>& M, int i, int j)
@@ -670,8 +706,8 @@ Matrix<T> Matrix<T>::Inverse_Matrix()
 		for(int j = 0; j < this->column; ++j)
 			Inverse[i][j] = Gauss_Jordan_Aug[i][j + (this->column)];
 	
-	std::cout << "Inverse Matrix\n";
-	Inverse.Print();
+//	std::cout << "Inverse Matrix\n";
+//	Inverse.Print();
 	return Inverse;
 }
 
