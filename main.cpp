@@ -144,7 +144,7 @@ for(auto& i : v)
 
 v.Print();
 
-Matrix<double> Transformation(size, size);
+Matrix<double> Transformation(size - 1, size);
 std::cout << "Input Transformation matrix with row = " << Transformation.Get_row() 
                                    << " and column = " << Transformation.Get_column() << '\n';
 for(auto& i : Transformation)
@@ -185,13 +185,15 @@ if(v.Get_size() == Transformation.Get_column())
 Matrix<double> Basis_of_Tr = Transformation.Basis();
 std::cout << "Basis of the Transformation Matrix is:\n";
 Basis_of_Tr.Print();
-
-std::cout << "Rank of Transformation Matrix is:\n" << Transformation.Get_Rank() << '\n';
-
-Transformation.Kernel_Print(); 
 Transformation.Determinant();
 std::cout << "Transformation Determinant  = " << Transformation.Get_Determinant() << '\n';
+std::cout << "Rank of Transformation Matrix is:\n" << Transformation.Get_Rank() << '\n';
 
+std::cout << "Transformation Matrix Gauss Jordan Augmented ";
+(Transformation.Get_Determinant() == 0) ? std::cout << "Partial Elemination" : std::cout << "Elemination\n";
+
+Transformation.Gauss_Jordan_Augmented_Elemination(Transformation).Print();
+Transformation.Kernel_Print(); 
 
 
 }
